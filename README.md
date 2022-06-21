@@ -66,6 +66,48 @@ serving at port 4444
 
 ### Results
 
+## Attack 2: ARP Spoofing
+
+### Description
+
+### Attack Scenario
+
+#### Network Topology
+
+#### Attack Process
+
+Before the attack:
+
+```bash
+vagrant@client:~$ arp -a
+? (192.168.56.100) at 08:00:27:03:7e:13 [ether] on enp0s8
+? (192.168.56.101) at 08:00:27:11:bd:83 [ether] on enp0s8
+_gateway (10.0.2.2) at 52:54:00:12:35:02 [ether] on enp0s3
+? (10.0.2.3) at 52:54:00:12:35:03 [ether] on enp0s3
+```
+
+After the attack:
+
+```bash
+vagrant@client:~$ arp -a
+? (192.168.56.100) at 08:00:27:03:7e:13 [ether] on enp0s8
+? (192.168.56.101) at 08:00:27:03:7e:13 [ether] on enp0s8
+_gateway (10.0.2.2) at 52:54:00:12:35:02 [ether] on enp0s3
+? (10.0.2.3) at 52:54:00:12:35:03 [ether] on enp0s3
+```
+
+![](images/02-attacker-poisoning.png)
+
+It can be seen that before the attack, client sends the HTTP request packets to the server with the MAC address `08:00:27:11:bd:83`:
+
+![](images/02-client-before-poisoning.png)
+
+Also, after the spoofing, client starts sending the same HTTP packets to the server but with MAC address `08:00:27:03:7e:13`:
+
+![](images/02-client-after-poisoning.png)
+
+### Results
+
 ## APPENDIX
 
 ### Repository Structure
